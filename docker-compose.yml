@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: eventostec-postgres
+    environment:
+      POSTGRES_DB: eventostec
+      POSTGRES_USER: user-eventostec
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - eventostec-postgres-data:/var/lib/postgresql/data
+
+  localstack:
+    image: localstack/localstack:3.8.1
+    container_name: eventostec-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+    volumes:
+      - eventostec-localstack-data:/var/lib/localstack
+
+volumes:
+  eventostec-postgres-data:
+  eventostec-localstack-data:
